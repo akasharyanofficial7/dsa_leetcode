@@ -211,16 +211,44 @@
 //    * *
 //     *
 
+// function add(n) {
+//   for (let i = 1; i <= n; i++) {
+//     let str = "";
+//     for (let j = 1; j <= 3; j++) {
+//       if (i == 1 || i == 4 || j == 1 || j == 3) {
+//         str += "3";
+//       } else if (i == 2 && j == 2) {
+//         str += "1";
+//       } else if (i == 2 || j == 2) {
+//         str += "2";
+//       }
+//     }
+//     console.log(str);
+//   }
+// }
+
+// add(4);
+
+// 333
+// 313
+// 323
+// 333
+
+let start = 10;
+
 for (let i = 1; i <= 4; i++) {
   let line = "";
-  for (let j = 1; j <= 3; j++) {
-    if (i === 1 || i === 4 || j === 1 || j === 3) {
-      line += "3";
-    } else if (i === 2 && j === 2) {
-      line += "1";
-    } else if (i === 3 && j === 2) {
-      line += "2";
-    }
+
+  // Add leading spaces
+  for (let j = 1; j < i; j++) {
+    line += " ";
   }
+
+  // Generate numbers in the row
+  for (let k = 1; k <= 5 - i; k++) {
+    line += start;
+    start--;
+  }
+
   console.log(line);
 }
