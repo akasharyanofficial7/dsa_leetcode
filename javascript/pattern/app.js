@@ -234,21 +234,111 @@
 // 323
 // 333
 
-let start = 10;
+// let start = 10;
 
-for (let i = 1; i <= 4; i++) {
-  let line = "";
+// for (let i = 1; i <= 4; i++) {
+//   let line = "";
 
-  // Add leading spaces
-  for (let j = 1; j < i; j++) {
-    line += " ";
+//   // Add leading spaces
+//   for (let j = 1; j < i; j++) {
+//     line += " ";
+//   }
+
+//   // Generate numbers in the row
+//   for (let k = 1; k <= 5 - i; k++) {
+//     line += start;
+//     start--;
+//   }
+
+//   console.log(line);
+
+//}
+
+// let start = 6;
+// for (let i = 1; i <= 4; i++) {
+//   let spaces = "";
+
+//   let star = "";
+//   for (let j = 0; j < 4; j++) {
+//     spaces += " ";
+//   }
+//   for (let k = 1; k <= 5 - i; k++) {
+//     if (i == 1 && (k == 1 || k == 2 || k == 3 || k == 4)) {
+//       star += start;
+//     } else if (i == 2 && (k == 1 || k == 2 || k == 3)) {
+//       star += start;
+//     } else if (i == 3 && (k == 1 || k == 2)) {
+//       star += start;
+//     } else if (i == 4 && (k == 1 || k == 2)) {
+//       star += start;
+//     }
+//     if (k >= 5 - i) {
+//       start--;
+//     }
+//   }
+//   console.log(star + spaces);
+// }
+
+// 6666;
+// 555;
+// 44;
+// 3;
+
+// let start = 3;
+// let val = start;
+// for (let i = 1; i <= 4; i++) {
+//   let spaces = "";
+//   let star = "";
+//   for (let j = 1; j <= i; j++) {
+//     star += val + " ";
+
+//     val++;
+//   }
+//   console.log(star + spaces);
+// }
+
+// 3
+// 4 5
+// 6 7 8
+// 9 10 11 12
+
+// let start = 3;
+// let val = start;
+// for (let i = 1; i <= 4; i++) {
+//   let spaces = "";
+//   let star = "";
+//   for (let j = 1; j <= i; j++) {
+//     star += val + "";
+//   }
+
+//   val++;
+
+//   console.log(star + spaces);
+// }
+
+// 3
+// 44
+// 555
+// 6666
+
+let start = 3;
+
+for (let i = 0; i <= 7; i++) {
+  let star = "";
+  let count = i;
+
+  if (i >= 4) {
+    count = 8 - i;
+  }
+  for (let j = 1; j <= count; j++) {
+    star += start;
   }
 
-  // Generate numbers in the row
-  for (let k = 1; k <= 5 - i; k++) {
-    line += start;
+  if (i < 4) {
+    start++;
+  } else {
     start--;
   }
 
-  console.log(line);
+  console.log(star);
 }
