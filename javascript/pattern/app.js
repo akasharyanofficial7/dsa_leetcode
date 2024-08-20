@@ -321,24 +321,25 @@
 // 555
 // 6666
 
-let start = 3;
+// let start = 3;
 
-for (let i = 0; i <= 7; i++) {
-  let star = "";
-  let count = i;
+// for (let i = 0; i <= 7; i++) {
+//   let star = "";
+//   let count = i;
 
-  if (i >= 4) {
-    count = 8 - i;
-  }
-  for (let j = 1; j <= count; j++) {
-    star += start;
-  }
+//   if (i >= 4) {
+//     count = 8 - i;
+//   }
+//   for (let j = 1; j <= count; j++) {
+//     star += start;
+//   }
 
-  if (i < 4) {
-    start++;
-  } else {
-    start--;
-  }
+//   if (i < 4) {
+//     start++;
+//   } else {
+//     start--;
+//   }
 
-  console.log(star);
-}
+//   console.log(star);
+
+//}
