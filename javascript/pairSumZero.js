@@ -1,7 +1,7 @@
 //calculate the first index pair which sum is zero then return indexes
 
 function sumZero() {
-  const arr = [1, -1, 2, 8, 5];
+  const arr = [1, -2, 2, 8, 5];
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[i] + arr[j] === 0) {
@@ -15,10 +15,11 @@ function sumZero() {
 
 console.log(sumZero());
 
-//second approach
+//second approach by sorting  the array
 
 function sumZero1() {
-  const arr = [1, -1, 2, 8, 5];
+  const arr1 = [1, -2, 2, 8, 5];
+  const arr = arr1.sort();
   let left = 0;
   let right = arr.length - 1;
 
@@ -33,6 +34,7 @@ function sumZero1() {
       left++;
     }
   }
+  return -1;
 }
 
 console.log(sumZero1());
