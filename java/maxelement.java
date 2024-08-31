@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 public class maxelement{
 
     // find max elemet using brute force element
@@ -13,7 +13,9 @@ public class maxelement{
             System.out.println(max(arr));
     }
         public static int max(int [] arr){
-            int maxVal=0;
+
+
+            int maxVal= Integer.MIN_VALUE;
         for( int i=0;   i<arr.length; i++){
          if( arr[i]>maxVal){
          maxVal= arr[i];
