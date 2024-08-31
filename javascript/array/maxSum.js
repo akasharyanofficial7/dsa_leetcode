@@ -4,16 +4,17 @@ function sum(arr) {
   let sMax = 0;
   let i = 0;
   let j = arr.length - 1;
-  while (i < j) {
+  while (i <= j) {
     if (arr[i] > max) {
-      if (sMax < max) {
-        sMax = max;
-      }
+      sMax = max;
       max = arr[i];
+    } else if (arr[i] > sMax) {
+      sMax = arr[i];
     }
+
     i++;
   }
   return sMax + max;
 }
-let arr = [1, 8, 10, 3, 6, 22, 1];
+let arr = [1, 98, 10, 3, 60, 22, 10];
 console.log(sum(arr));
