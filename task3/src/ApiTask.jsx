@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 
 const ApiTask = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const fetchData = () => {
+    setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
-      .then((users) => setData(users))
+      .then((users) => {
+        setData(users);
+        setLoading(false);
+      })
       .catch((error) => {
-        console.log(" this is error");
+        console.log("This is an error:", error);
       });
   };
 
-  // fetchData();
   return (
     <div>
-      <button onClick={fetchData}>CLICK ME</button>
+      <button onClick={fetchData}>Click me</button>
       <ul>
-        {data.map((val) => {
-          return <li>{val.name}</li>;
-        })}
+        {loading && <p>Loading...</p>}
+        {data && data.map((val) => <li key={val.id}>{val.name}</li>)}
       </ul>
     </div>
   );
