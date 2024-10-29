@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ApiTask = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
   const fetchData = () => {
     setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/users")
