@@ -57,6 +57,28 @@ tringle(6);
 1
 
 
+function prymid(n) {
+  for (let i = 1; i <= n; i++) {
+    let row = "";
+    for (let j = 1; j <= n - i; j++) {
+      row += " ";
+    }
+    for (let k = 1; k <= i; k++) {
+      row += " " + i;
+    }
+    console.log(row);
+  }
+}
 
+prymid(6);
+
+
+
+      1
+     2 2
+    3 3 3
+   4 4 4 4
+  5 5 5 5 5
+ 6 6 6 6 6 6
 
 
