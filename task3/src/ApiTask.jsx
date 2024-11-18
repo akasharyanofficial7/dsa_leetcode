@@ -7,7 +7,7 @@ const ApiTask = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())

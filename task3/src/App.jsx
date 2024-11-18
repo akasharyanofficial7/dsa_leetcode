@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import Form from "./Form";
+import ApiTask from "./Apitask";
 const App = () => {
   const value = [];
   const [data, setData] = useState(value);
@@ -32,6 +33,8 @@ const App = () => {
       <button onClick={createList}>Add</button>
 
       <h2>{val}</h2>
+      <Form />
+      <ApiTask />
     </div>
   );
 };
