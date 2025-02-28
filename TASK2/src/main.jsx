@@ -1,68 +1,81 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-
-
-
-
-const express = require("express");
-const mysql = require("mysql");
+ const express = require("express");
+const { Sequelize, DataTypes } = require("sequelize");
+const fileUpload = require("express-fileupload");
 const xlsx = require("xlsx");
-const path = require("path");
 
+// ✅ Express App Setup
 const app = express();
+app.use(express.json());
+app.use(fileUpload());
 
-// MySQL Connection
-const db = mysql.createConnection({
+// ✅ MySQL Connection (Sequelize)
+const sequelize = new Sequelize("excel_db", "root", "12345", {
   host: "localhost",
-  user: "root",
-  password: "12345",
-  database: "excel_db",
+  dialect: "mysql",
 });
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log("MySQL Connected...");
-});
+// ✅ User Model
+const User = sequelize.define(
+  "User",
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: false, // ✅ isse `createdAt` aur `updatedAt` nahi add hoga
+  }
+);
 
-// Route: Read Excel File & Save Data
-app.get("/upload", (req, res) => {
-  const filePath = path.join(__dirname, "/Book1.xlsx"); // 👈 Ensure correct file path
-
-  console.log("Reading File:", filePath);
-
-  const workbook = xlsx.readFile(filePath);
-  const sheetName = workbook.SheetNames[0]; // First sheet
-  const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-  if (sheetData.length === 0) {
-    return res.send("No data found in Excel file.");
+// ✅ Upload & Process Excel File
+app.post("/upload", async (req, res) => {
+  if (!req.files || !req.files.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
-  // Insert Data into MySQL
-  sheetData.forEach((row) => {
-    const { name, email, age } = row; // Ensure correct column names
+  const file = req.files.file;
+  const workbook = xlsx.read(file.data, { type: "buffer" });
+  const sheetName = workbook.SheetNames[0];
+  const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-    console.log("📌 Inserting Data:", name, email, age); // ✅ Yeh check karega ki sahi values ja rahi hain ya nahi
+  console.log("📌 Sheet Data:", sheetData);
 
-    const sql = "INSERT INTO users (name, email, age) VALUES (?, ?, ?)";
-    db.query(sql, [name, email, age], (err, result) => {
-      if (err) {
-        console.error("❌ SQL Error:", err);
-      } else {
-        console.log("✅ Data Inserted Successfully!", result);
-      }
-    });
-  });
-
-  res.send("Data inserted successfully!");
+  // ✅ Save Data to MySQL
+  try {
+    await User.bulkCreate(sheetData);
+    res.json({ message: "Data inserted successfully!" });
+  } catch (error) {
+    console.error("❌ Error inserting data:", error);
+    res.status(500).json({ error: "Failed to insert data" });
+  }
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+// ✅ Fetch Data API
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.json(users);
+  } catch (error) {
+    console.error("❌ Error fetching users:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+});
+
+// ✅ Sync Database & Start Server
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("✅ Database Synced");
+    app.listen(5000, () => console.log("🚀 Server running on port 5000"));
+  })
+  .catch((err) => console.error("❌ Database Sync Error:", err));
